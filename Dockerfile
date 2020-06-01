@@ -1,6 +1,6 @@
-FROM python:3-alpine
+FROM python:3
 
-RUN apk add gcc libressl-dev musl-dev libffi-dev make lftp openssh && \
+RUN apt update && apt install libnss-wrapper lftp openssh-client && \
     pip3 install crypt4gh
 
 COPY crypt4gh-wrap* /usr/local/bin/
