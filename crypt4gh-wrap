@@ -1,0 +1,52 @@
+#!/bin/sh
+#
+#
+
+help() {
+echo "Use: $0 <SECRET_KEY> <PUBLIC_KEY> <C4GH_PASSPHRASE> <FILE1> [<FILE2> ...]" >&2
+}
+
+SECRET_KEY=$1
+PUBLIC_KEY=$2
+export C4GH_PASSPHRASE=$3
+shift 3
+
+if [ -z "${SECRET_KEY}" -o ! -f "${SECRET_KEY}" ];
+then
+  echo "Cannot find SECRET_KEY" >&2
+  help;
+  exit 1
+fi
+
+
+if [ -z "${PUBLIC_KEY}" -o ! -f "${PUBLIC_KEY}" ];
+then
+  echo "Cannot find PUBLIC_KEY" >&2
+  help;
+  exit 2;
+fi
+
+if [ -z "${C4GH_PASSPHRASE}" ];
+then
+  echo "Cannot find C4GH_PASSPHRASE" >&2
+  help;
+  exit 3;
+fi
+
+if [ -z "$1" ];
+then
+  echo "Cannot find any file to encrypt" >&2
+  help;
+  exit 4;
+fi
+
+for file in "$@";
+do
+  set -x
+  crypt4gh encrypt --sk "$SECRET_KEY" --recipient_pk "$PUBLIC_KEY" <"${file}" >"${file}.g4h"
+  set +x
+  echo "Created file: ${file}.g4h"
+done
+
+ls -l $(dirname $1)
+
