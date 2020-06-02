@@ -10,6 +10,8 @@ then
   exit 1
 fi
 
+ls -l
+
 source passwd.sh
 
 lftp -f /secret/lftp.txt
