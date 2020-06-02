@@ -1,5 +1,6 @@
 #!/bin/sh
 #
+set -x
 echo "Command line: $0 $@"
 
 crypt4gh-wrap /secret/testcineca.sk /secret/ega_key.c4gh.pub $(cat /secret/sftpkeypassword) $@

@@ -42,9 +42,7 @@ fi
 
 for file in "$@";
 do
-  set -x
   crypt4gh encrypt --sk "$SECRET_KEY" --recipient_pk "$PUBLIC_KEY" <"${file}" >"${file}.g4h"
-  set +x
   echo "Created file: ${file}.g4h"
 done
 
