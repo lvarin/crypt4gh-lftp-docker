@@ -15,6 +15,7 @@ ls -l
 
 . /usr/local/bin/passwd.sh
 
+cd $(dirname $1)
 ls -l
 
 lftp -f /secret/lftp.txt
