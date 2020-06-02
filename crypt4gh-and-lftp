@@ -1,0 +1,16 @@
+#!/bin/sh
+#
+echo "Command line: $0 $@"
+
+crypt4gh-wrap /secret/testcineca.sk /secret/ega_key.c4gh.pub $(cat /secret/sftpkeypassword) $@
+
+if [ $? -ne 0 ];
+then
+  echo "ERROR: Problems to encrypt files" >&2
+  exit 1
+fi
+
+source passwd.sh
+
+lftp -f /secret/lftp.txt
+
