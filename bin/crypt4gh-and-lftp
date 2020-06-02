@@ -12,7 +12,7 @@ fi
 
 ls -l
 
-source /usr/local/bin/passwd.sh
+. /usr/local/bin/passwd.sh
 
 lftp -f /secret/lftp.txt
 

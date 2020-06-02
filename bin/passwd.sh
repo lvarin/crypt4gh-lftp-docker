@@ -1,11 +1,11 @@
-#!/bin/sh
+#!/bin/bash
 
 # Use nss_wrapper to add the current user to /etc/passwd
 # and enable the use of tools like ssh
 USER_ID=$(id -u)
 GROUP_ID=$(id -g)
 # Pointless if running as root
-if [[ "${USER_ID}" != '0' ]]; then
+if [ "${USER_ID}" != '0' ]; then
    export NSS_WRAPPER_PASSWD=/tmp/nss_passwd
    export NSS_WRAPPER_GROUP=/tmp/nss_group
    cp /etc/passwd $NSS_WRAPPER_PASSWD
