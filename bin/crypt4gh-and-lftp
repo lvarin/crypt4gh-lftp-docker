@@ -1,9 +1,10 @@
 #!/bin/sh
 #
 set -x
-echo "Command line: $0 $@"
+FILES=$*
+echo "Command line: $0 $FILES"
 
-crypt4gh-wrap /secret/testcineca.sk /secret/ega_key.c4gh.pub $(cat /secret/sftpkeypassword) $@
+crypt4gh-wrap /secret/testcineca.sk /secret/ega_key.c4gh.pub "$(cat /secret/sftpkeypassword)" $FILES
 
 if [ $? -ne 0 ];
 then
@@ -15,8 +16,10 @@ ls -l
 
 . /usr/local/bin/passwd.sh
 
-cd $(dirname $1)
-ls -l
-
-lftp -f /secret/lftp.txt
+for i in $FILES;
+do
+  cd "$(dirname "$i")"
+  ls -l >&2
+  lftp -f /secret/lftp.txt
+done
 
