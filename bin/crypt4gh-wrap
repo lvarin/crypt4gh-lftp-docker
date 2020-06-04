@@ -3,6 +3,8 @@
 #
 SECRET_EXT='c4gh'
 
+DATE=$(date +%Y%m%d-%Hh%Mm%S)
+
 help() {
 echo "Use: $0 <SECRET_KEY> <PUBLIC_KEY> <C4GH_PASSPHRASE> <FILE1> [<FILE2> ...]" >&2
 }
@@ -43,9 +45,10 @@ fi
 
 for file in "$@";
 do
-  crypt4gh encrypt --sk "$SECRET_KEY" --recipient_pk "$PUBLIC_KEY" <"${file}" >"${file}.${SECRET_EXT}"
-  echo "Created file: ${file}.${SECRET_EXT}"
+  NEWFILE="${file}.${DATE}.${SECRET_EXT}"
+  crypt4gh encrypt --sk "$SECRET_KEY" --recipient_pk "$PUBLIC_KEY" <"${file}" >"${NEWFILE}"
+  echo "Created file: ${NEWFILE}"
+  ls -l "$(dirname "${NEWFILE}")"
 done
 
-ls -l $(dirname $1)
 
